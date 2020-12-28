@@ -6,46 +6,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Optional;
 
 import entities.Classes;
 import entities.Student;
 
-public class StudentDAO {
-	/*
-	 * get
-	 */
-	public ArrayList<Student> getAllStudent(){
-		ArrayList<Student> listStudent = new ArrayList<Student>();
-		Connection con = new DataConnection().getcn();
-		if(con == null) {
-			return null;
-		}
-		try {
-			String query = "SELECT * FROM Student";
-			PreparedStatement ps = con.prepareStatement(query);
-			ResultSet rs = ps.executeQuery();
-			while (rs.next()) {
-				int id = rs.getInt("ID");
-				String name = rs.getString("Name");
-				String dateOfBirth = rs.getString("DateOfBirth");
-				String sex = "";
-				if(rs.getInt("Sex") == 0) {
-					sex = "Nữ";
-				}else {
-					sex = "Nam";
-				}
-				Classes classes = new Classes(rs.getInt("ID_Class"));
-				Student st = new Student(id, name, dateOfBirth, sex, classes);
-				listStudent.add(st);
-			}
-		}catch(SQLException e) {
-			e.printStackTrace();
-		}
-		return listStudent;
-	}
-	/*
-	 * 
-	 */
+public class StudentDAO implements Dao<Student>{
+	
 	public ArrayList<Student> getListStudentByClass(int id_class){
 		ArrayList<Student> listStudent = new ArrayList<Student>();
 		Connection con = new DataConnection().getcn();
@@ -76,14 +44,13 @@ public class StudentDAO {
 		}
 		return listStudent;
 	}
-	/*
-	 * 
-	 */
-	public int GetStudentByID(int id) {
-		int kq = 0;
+	
+	@Override
+	public Optional<Student> get(int id) {
+		Student student = new Student();
 		Connection con = new DataConnection().getcn();
 		if(con == null) {
-			return -1;
+			return null;
 		}
 		try {
 			String query = "SELECT * FROM Student where id = ?";
@@ -91,17 +58,55 @@ public class StudentDAO {
 			ps.setInt(1, id);
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
-				kq++;
+				int id2 = rs.getInt("ID");
+				String name = rs.getString("Name");
+				String dateOfBirth = rs.getString("DateOfBirth");
+				String sex = "";
+				if(rs.getInt("Sex") == 0) {
+					sex = "Nữ";
+				}else {
+					sex = "Nam";
+				}
+				Classes classes = new Classes(rs.getInt("ID_Class"));
+				student = new Student(id2, name, dateOfBirth, sex, classes);
 			}
 		}catch(SQLException e) {
 			e.printStackTrace();
 		}
-		return kq;
+		return Optional.of(student);
 	}
-	/*
-	 * 
-	 */
-	public int AddStudent(Student st){
+	@Override
+	public Collection<Student> getAll() {
+		ArrayList<Student> listStudent = new ArrayList<Student>();
+		Connection con = new DataConnection().getcn();
+		if(con == null) {
+			return null;
+		}
+		try {
+			String query = "SELECT * FROM Student";
+			PreparedStatement ps = con.prepareStatement(query);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				int id = rs.getInt("ID");
+				String name = rs.getString("Name");
+				String dateOfBirth = rs.getString("DateOfBirth");
+				String sex = "";
+				if(rs.getInt("Sex") == 0) {
+					sex = "Nữ";
+				}else {
+					sex = "Nam";
+				}
+				Classes classes = new Classes(rs.getInt("ID_Class"));
+				Student st = new Student(id, name, dateOfBirth, sex, classes);
+				listStudent.add(st);
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		return listStudent;
+	}
+	@Override
+	public int save(Student st) {
 		int kq = 0;
 		Connection con = new DataConnection().getcn();
 		if(con == null) {
@@ -128,10 +133,8 @@ public class StudentDAO {
 		}
 		return kq;
 	}
-	/*
-	 * 
-	 */
-	public int EditStudent(Student st){
+	@Override
+	public int update(Student st) {
 		int kq = 0;
 		Connection con = new DataConnection().getcn();
 		if(con == null) {
@@ -159,10 +162,8 @@ public class StudentDAO {
 		}
 		return kq;
 	}
-	/*
-	 * 
-	 */
-	public int deleteStudent(int id){
+	@Override
+	public int delete(Student st) {
 		int kq = 0;
 		Connection con = new DataConnection().getcn();
 		if(con == null) {
@@ -171,7 +172,7 @@ public class StudentDAO {
 		try {
 			String query = "DELETE Student where ID = ?";
 			PreparedStatement ps = con.prepareStatement(query);
-			ps.setInt(1, id);
+			ps.setInt(1, st.getID());
 			kq = ps.executeUpdate();
 		}catch(SQLException e) {
 			e.printStackTrace();

@@ -3,6 +3,7 @@ package test;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
@@ -11,10 +12,12 @@ import dao.ClassesDAO;
 import dao.StudentDAO;
 import entities.Classes;
 import entities.Student;
+import service.ClassesService;
+import service.StudentService;
 
 public class TestMain {
-	public static StudentDAO studentDAO;
-	public static ClassesDAO classDAO;
+	public static StudentService studentService;
+	public static ClassesService classesService;
 	
 	public static void menu() {
 		System.out.println("1. Show All students");
@@ -32,8 +35,8 @@ public class TestMain {
 	 * 1.
 	 */
 	public static void ShowAllStudent() {
-		studentDAO = new StudentDAO();
-		ArrayList<Student> listStudent = studentDAO.getAllStudent();
+		studentService = new StudentService();
+		Collection<Student> listStudent = studentService.getAllStudent();
 		System.out.println("========== List students ==========");
 		System.out.println(listStudent);
 	}
@@ -41,7 +44,7 @@ public class TestMain {
 	 * 2.
 	 */
 	public static boolean AddStudent() {
-		studentDAO = new StudentDAO();
+		studentService = new StudentService();
 		System.out.print("input Name: ");
 		String name = new Scanner(System.in).nextLine();
 
@@ -56,20 +59,18 @@ public class TestMain {
 
 		Classes classes = new Classes(id_Class);
 		Student st = new Student(name, dateOfBirth, sex, classes);
-		if (studentDAO.AddStudent(st) > 0) {
-			return true;
-		}
-		return false;
+		
+		return studentService.saveStudent(st);
 	}
 	/*
 	 * 3.
 	 */
 	
-	public static boolean EditStudent() {
-		studentDAO = new StudentDAO();
+	public static boolean updateStudent() {
+		studentService = new StudentService();
 		System.out.print("Choose student to edit by id: ");
 		int id = new Scanner(System.in).nextInt();
-		if (studentDAO.GetStudentByID(id) > 0) {
+		if (studentService.getStudentByID(id) != null) {
 			System.out.print("input Name: ");
 			String name = new Scanner(System.in).nextLine();
 
@@ -84,10 +85,8 @@ public class TestMain {
 
 			Classes classes = new Classes(id_Class);
 			Student st = new Student(id,name, dateOfBirth, sex, classes);
-			if (studentDAO.EditStudent(st) > 0) {
-				return true;
-			}
-			return false;
+			
+			return studentService.updateStudent(st);
 		} else {
 			System.out.println("Student do not exist");
 		}
@@ -97,15 +96,12 @@ public class TestMain {
 	 * 4.
 	 */
 	public static boolean DeleteStudent() {
-		studentDAO = new StudentDAO();
+		studentService = new StudentService();
 		System.out.print("Choose student to delete by id: ");
 		int id = new Scanner(System.in).nextInt();
-		
-		if (studentDAO.GetStudentByID(id) > 0) {
-			if (studentDAO.deleteStudent(id) > 0) {
-				return true;
-			}
-			return false;
+		if (studentService.getStudentByID(id) != null) {
+			Student student = new Student(id);
+			return studentService.deleteStudent(student);
 		} else {
 			System.out.println("Student do not exist");
 		}
@@ -115,8 +111,8 @@ public class TestMain {
 	 * 5.
 	 */
 	public static void ShowAllClass() {
-		classDAO = new ClassesDAO();
-		ArrayList<Classes> listStudent = classDAO.getAllClass();
+		classesService = new ClassesService();
+		ArrayList<Classes> listStudent = (ArrayList<Classes>)classesService.getAllClass();
 		System.out.println("========== List Class ==========");
 		System.out.println(listStudent);
 	}
@@ -124,10 +120,10 @@ public class TestMain {
 	 * 6.
 	 */
 	public static void ShowListStudenByClass() {
+		studentService = new StudentService();
 		System.out.println("Input Id class: ");
-		studentDAO = new StudentDAO();
 		int id_class = new Scanner(System.in).nextInt();
-		List<Student> listStudent = studentDAO.getListStudentByClass(id_class);
+		List<Student> listStudent = studentService.getListStudentByClass(id_class);
 		if(listStudent.size() > 0) {
 			System.out.println(listStudent);
 		}else {
@@ -137,33 +133,26 @@ public class TestMain {
 	/*
 	 * 7.
 	 */
-	public static boolean AddClass() {
-		classDAO = new ClassesDAO();
+	public static boolean saveClass() {
+		classesService = new ClassesService();
 		System.out.println("Input ClassName: ");
 		String className = new Scanner(System.in).nextLine();
 		Classes classes = new Classes(className);
-		if(classDAO.AddClass(classes) > 0) {
-			return true;
-		}else {
-			return false;
-		}
+		return classesService.saveClass(classes);
 	}
 	/*
 	 * 8.
 	 */
-	public static boolean EditClass() {
-		classDAO = new ClassesDAO();
+	public static boolean updateClass() {
+		classesService = new ClassesService();
 		System.out.println("Input id class to edit: ");
 		int id_Class = new Scanner(System.in).nextInt();
-		if(classDAO.GetClassByID(id_Class) > 0) {
+		if(classesService.getClassById(id_Class) != null) {
 			System.out.println("Input ClassName: ");
 			String className = new Scanner(System.in).nextLine();
 			Classes classes = new Classes(id_Class,className);
-			if(classDAO.EditClass(classes) > 0) {
-				return true;
-			}else {
-				return false;
-			}
+			
+			return classesService.updateClass(classes);
 		}else {
 			System.out.println("Class do not exist");
 		}
@@ -173,18 +162,13 @@ public class TestMain {
 	 * 9.
 	 */
 	public static boolean DeleteClass() {
-		classDAO = new ClassesDAO();
+		classesService = new ClassesService();
 		System.out.println("Input id class to delete: ");
 		int id_Class = new Scanner(System.in).nextInt();
 		
-		if(classDAO.GetClassByID(id_Class) > 0) {
+		if(classesService.getClassById(id_Class) != null) {
 			Classes classes = new Classes(id_Class);
-			System.out.println(classDAO.DeleteClass(id_Class));
-			if(classDAO.DeleteClass(id_Class) >= 0) {
-				return true;
-			}else {
-				return false;
-			}
+			return classesService.deleteClass(classes);
 		}else {
 			System.out.println("Class do not exist");
 		}
@@ -208,7 +192,7 @@ public class TestMain {
 				}
 				break;
 			case 3:
-				if (EditStudent()) {
+				if (updateStudent()) {
 					System.out.println("Edit sucessfully.........");
 				} else {
 					System.out.println("Edit Fail........");
@@ -228,14 +212,14 @@ public class TestMain {
 				ShowListStudenByClass();
 				break;
 			case 7:
-				if(AddClass()) {
+				if(saveClass()) {
 					System.out.println("Add class sucessfully");
 				}else {
 					System.out.println("Add class fail");
 				}
 				break;
 			case 8:
-				if(EditClass()) {
+				if(updateClass()) {
 					System.out.println("Edit class sucessfully");
 				}else {
 					System.out.println("Edit class fail");
