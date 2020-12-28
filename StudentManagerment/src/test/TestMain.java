@@ -34,7 +34,7 @@ public class TestMain {
 	/*
 	 * 1.
 	 */
-	public static void ShowAllStudent() {
+	public static void showAllStudent() {
 		studentService = new StudentService();
 		Collection<Student> listStudent = studentService.getAllStudent();
 		System.out.println("========== List students ==========");
@@ -43,7 +43,7 @@ public class TestMain {
 	/*
 	 * 2.
 	 */
-	public static boolean AddStudent() {
+	public static boolean addStudent() {
 		studentService = new StudentService();
 		System.out.print("input Name: ");
 		String name = new Scanner(System.in).nextLine();
@@ -95,7 +95,7 @@ public class TestMain {
 	/*
 	 * 4.
 	 */
-	public static boolean DeleteStudent() {
+	public static boolean deleteStudent() {
 		studentService = new StudentService();
 		System.out.print("Choose student to delete by id: ");
 		int id = new Scanner(System.in).nextInt();
@@ -110,7 +110,7 @@ public class TestMain {
 	/*
 	 * 5.
 	 */
-	public static void ShowAllClass() {
+	public static void showAllClass() {
 		classesService = new ClassesService();
 		ArrayList<Classes> listStudent = (ArrayList<Classes>)classesService.getAllClass();
 		System.out.println("========== List Class ==========");
@@ -119,7 +119,7 @@ public class TestMain {
 	/*
 	 * 6.
 	 */
-	public static void ShowListStudenByClass() {
+	public static void showListStudenByClass() {
 		studentService = new StudentService();
 		System.out.println("Input Id class: ");
 		int id_class = new Scanner(System.in).nextInt();
@@ -161,7 +161,7 @@ public class TestMain {
 	/*
 	 * 9.
 	 */
-	public static boolean DeleteClass() {
+	public static boolean deleteClass() {
 		classesService = new ClassesService();
 		System.out.println("Input id class to delete: ");
 		int id_Class = new Scanner(System.in).nextInt();
@@ -182,10 +182,10 @@ public class TestMain {
 			int choose = new Scanner(System.in).nextInt();
 			switch (choose) {
 			case 1:
-				ShowAllStudent();
+				showAllStudent();
 				break;
 			case 2:
-				if (AddStudent()) {
+				if (addStudent()) {
 					System.out.println("Add sucessfully.........");
 				} else {
 					System.out.println("Add Fail........");
@@ -199,17 +199,17 @@ public class TestMain {
 				}
 				break;
 			case 4:
-				if (DeleteStudent()) {
+				if (deleteStudent()) {
 					System.out.println("Delete sucessfully.........");
 				} else {
 					System.out.println("Delete Fail........");
 				}
 				break;
 			case 5:
-				ShowAllClass();
+				showAllClass();
 				break;
 			case 6:
-				ShowListStudenByClass();
+				showListStudenByClass();
 				break;
 			case 7:
 				if(saveClass()) {
@@ -226,7 +226,7 @@ public class TestMain {
 				}
 				break;
 			case 9:
-				if(DeleteClass()) {
+				if(deleteClass()) {
 					System.out.println("Delete class sucessfully");
 				}else {
 					System.out.println("Delete class fail");
