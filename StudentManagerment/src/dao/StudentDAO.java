@@ -126,7 +126,7 @@ public class StudentDAO implements Dao<Student>{
 				ps.setInt(3, 1);
 			}
 			
-			ps.setInt(4, st.getClasses().getID_Class());
+			ps.setInt(4, st.getClasses().getIdClass());
 			kq = ps.executeUpdate();
 		}catch(SQLException e) {
 			e.printStackTrace();
@@ -154,8 +154,8 @@ public class StudentDAO implements Dao<Student>{
 			}else {
 				ps.setInt(3, 1);
 			}
-			ps.setInt(4, st.getClasses().getID_Class());
-			ps.setInt(5, st.getID());
+			ps.setInt(4, st.getClasses().getIdClass());
+			ps.setInt(5, st.getId());
 			kq = ps.executeUpdate();
 		}catch(SQLException e) {
 			e.printStackTrace();
@@ -172,7 +172,7 @@ public class StudentDAO implements Dao<Student>{
 		try {
 			String query = "DELETE Student where ID = ?";
 			PreparedStatement ps = con.prepareStatement(query);
-			ps.setInt(1, st.getID());
+			ps.setInt(1, st.getId());
 			kq = ps.executeUpdate();
 		}catch(SQLException e) {
 			e.printStackTrace();

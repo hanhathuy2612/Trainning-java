@@ -3,7 +3,7 @@ package entities;
 import java.sql.Date;
 
 public class Student {
-	private int ID;
+	private int id;
 	private String name;
 	private String dateOfBirth;
 	private String sex;
@@ -15,7 +15,7 @@ public class Student {
 	}
 	public Student(int iD, String name, String dateOfBirth, String sex, Classes classes) {
 		super();
-		ID = iD;
+		id = iD;
 		this.name = name;
 		this.dateOfBirth = dateOfBirth;
 		this.sex = sex;
@@ -24,7 +24,7 @@ public class Student {
 	
 	public Student(int iD) {
 		super();
-		ID = iD;
+		id = iD;
 	}
 	public Student(String name, String dateOfBirth, String sex, Classes classes) {
 		super();
@@ -33,11 +33,12 @@ public class Student {
 		this.sex = sex;
 		this.classes = classes;
 	}
-	public int getID() {
-		return ID;
+	
+	public int getId() {
+		return id;
 	}
-	public void setID(int iD) {
-		ID = iD;
+	public void setId(int id) {
+		this.id = id;
 	}
 	public String getName() {
 		return name;
@@ -65,8 +66,8 @@ public class Student {
 	}
 	@Override
 	public String toString() {
-		return "Student [" + ID + ", " + name + ", " + dateOfBirth + ", " + sex + ", "
-				+ classes.getID_Class() + "]\n";
+		return "Student [" + id + ", " + name + ", " + dateOfBirth + ", " + sex + ", "
+				+ classes.getIdClass() + "]\n";
 	}
 	
 	
