@@ -19,11 +19,6 @@ public class StudentService {
 		}
 		return instances;
 	}
-
-	public static void setInstances(StudentService instances) {
-		StudentService.instances = instances;
-	}
-
 	
 	public Optional<Student> getStudentByID(int id){
 		return StudentDAO.getInstances().get(id);

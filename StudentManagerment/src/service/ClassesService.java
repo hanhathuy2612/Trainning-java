@@ -10,8 +10,6 @@ import entities.Classes;
 
 public class ClassesService {
 	private static ClassesService instance;
-	
-	
 
 	public static ClassesService getInstance() {
 		if(instance == null) {
@@ -19,9 +17,7 @@ public class ClassesService {
 		}
 		return instance;
 	}
-	public static void setInstance(ClassesService instance) {
-		ClassesService.instance = instance;
-	}
+	
 	public Optional<Classes> getClassById(int id) {
 		return ClassesDAO.getInstances().get(id);
 	}

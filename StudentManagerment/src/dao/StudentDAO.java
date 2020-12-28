@@ -23,9 +23,6 @@ public class StudentDAO implements Dao<Student>{
 		return instances;
 	}
 
-	public static void setInstances(StudentDAO instances) {
-		StudentDAO.instances = instances;
-	}
 
 	public ArrayList<Student> getListStudentByClass(int id_class){
 		ArrayList<Student> listStudent = new ArrayList<Student>();

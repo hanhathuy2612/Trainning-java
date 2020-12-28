@@ -20,10 +20,6 @@ public class ClassesDAO implements Dao<Classes> {
 		return instances;
 	}
 
-	public static void setInstances(ClassesDAO instances) {
-		ClassesDAO.instances = instances;
-	}
-
 	@Override
 	public Optional<Classes> get(int id) {
 		Classes classes = new Classes();
