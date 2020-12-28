@@ -7,11 +7,22 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
-
 import entities.Classes;
 import entities.Student;
 
 public class ClassesDAO implements Dao<Classes> {
+	private static ClassesDAO instances;
+	
+	public static ClassesDAO getInstances() {
+		if(instances == null) {
+			instances = new ClassesDAO();
+		}
+		return instances;
+	}
+
+	public static void setInstances(ClassesDAO instances) {
+		ClassesDAO.instances = instances;
+	}
 
 	@Override
 	public Optional<Classes> get(int id) {
@@ -88,7 +99,7 @@ public class ClassesDAO implements Dao<Classes> {
 			String query = "UPDATE CLASS set ClassName = ? where ID_Class = ?";
 			PreparedStatement ps = con.prepareStatement(query);
 			ps.setString(1, t.getClassName());
-			ps.setInt(2, t.getID_Class());
+			ps.setInt(2, t.getIdClass());
 			kq = ps.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -106,7 +117,7 @@ public class ClassesDAO implements Dao<Classes> {
 		try {
 			String query = "EXEC DeleteClass ?";
 			PreparedStatement ps = con.prepareStatement(query);
-			ps.setInt(1, t.getID_Class());
+			ps.setInt(1, t.getIdClass());
 			kq = ps.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();

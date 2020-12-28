@@ -11,38 +11,46 @@ import entities.Student;
 
 public class StudentService {
 	
-	private StudentDAO studentDAO;
+	private static StudentService instances;
 	
-	public StudentService() {
-		studentDAO = new StudentDAO();
+	public static StudentService getInstances() {
+		if(instances == null) {
+			instances = new StudentService();
+		}
+		return instances;
 	}
+
+	public static void setInstances(StudentService instances) {
+		StudentService.instances = instances;
+	}
+
 	
 	public Optional<Student> getStudentByID(int id){
-		return studentDAO.get(id);
+		return StudentDAO.getInstances().get(id);
 	}
 	
 	public Collection<Student> getAllStudent(){
-		return studentDAO.getAll();
+		return StudentDAO.getInstances().getAll();
 	}
 	public ArrayList<Student> getListStudentByClass(int id){
-		return studentDAO.getListStudentByClass(id);
+		return StudentDAO.getInstances().getListStudentByClass(id);
 	}
 	public boolean saveStudent(Student st) {
-		if(studentDAO.save(st) > 0) {
+		if(StudentDAO.getInstances().save(st) > 0) {
 			return true;
 		}
 		return false;
 	}
 	
 	public boolean updateStudent(Student st) {
-		if(studentDAO.update(st) > 0) {
+		if(StudentDAO.getInstances().update(st) > 0) {
 			return true;
 		}
 		return false;
 	}
 	
 	public boolean deleteStudent(Student st) {
-		if(studentDAO.delete(st) > 0) {
+		if(StudentDAO.getInstances().delete(st) > 0) {
 			return true;
 		}
 		return false;

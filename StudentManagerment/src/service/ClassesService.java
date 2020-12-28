@@ -9,35 +9,42 @@ import dao.Dao;
 import entities.Classes;
 
 public class ClassesService {
-	private Dao<Classes> clDao;
+	private static ClassesService instance;
 	
-	public ClassesService() {
-		clDao = new ClassesDAO();
-	}
+	
 
+	public static ClassesService getInstance() {
+		if(instance == null) {
+			instance = new ClassesService();
+		}
+		return instance;
+	}
+	public static void setInstance(ClassesService instance) {
+		ClassesService.instance = instance;
+	}
 	public Optional<Classes> getClassById(int id) {
-		return clDao.get(id);
+		return ClassesDAO.getInstances().get(id);
 	}
 	public Collection<Classes> getAllClass(){
-		return clDao.getAll();
+		return ClassesDAO.getInstances().getAll();
 	}
 	
 	public boolean saveClass(Classes classes) {
-		if(clDao.save(classes) > 0) {
+		if(ClassesDAO.getInstances().save(classes) > 0) {
 			return true;
 		}
 		return false;
 	}
 	
 	public boolean updateClass(Classes classes) {
-		if(clDao.update(classes) > 0) {
+		if(ClassesDAO.getInstances().update(classes) > 0) {
 			return true;
 		}
 		return false;
 	}
 	
 	public boolean deleteClass(Classes classes) {
-		if(clDao.delete(classes) > 0) {
+		if(ClassesDAO.getInstances().delete(classes) > 0) {
 			return true;
 		}
 		return false;

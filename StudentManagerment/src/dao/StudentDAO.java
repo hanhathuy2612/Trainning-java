@@ -14,6 +14,19 @@ import entities.Student;
 
 public class StudentDAO implements Dao<Student>{
 	
+	private static StudentDAO instances = null;
+	
+	public static StudentDAO getInstances() {
+		if(instances == null) {
+			instances = new StudentDAO();
+		}
+		return instances;
+	}
+
+	public static void setInstances(StudentDAO instances) {
+		StudentDAO.instances = instances;
+	}
+
 	public ArrayList<Student> getListStudentByClass(int id_class){
 		ArrayList<Student> listStudent = new ArrayList<Student>();
 		Connection con = new DataConnection().getcn();
