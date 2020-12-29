@@ -33,7 +33,7 @@ public class TestMain {
 	 * 1.
 	 */
 	public static void showAllStudent() {
-		Collection<Student> listStudent = StudentService.getInstances().getAllStudent();
+		Collection<Student> listStudent = StudentService.getInstances().getAll();
 		System.out.println("========== List students ==========");
 		System.out.println(listStudent);
 	}
@@ -51,12 +51,12 @@ public class TestMain {
 		String sex = new Scanner(System.in).nextLine();
 
 		System.out.print("input ID_Class: ");
-		int id_Class = new Scanner(System.in).nextInt();
+		int idClass = new Scanner(System.in).nextInt();
 
-		Classes classes = new Classes(id_Class);
+		Classes classes = new Classes(idClass);
 		Student st = new Student(name, dateOfBirth, sex, classes);
 		
-		return StudentService.getInstances().saveStudent(st);
+		return StudentService.getInstances().save(st);
 	}
 	/*
 	 * 3.
@@ -65,7 +65,7 @@ public class TestMain {
 	public static boolean updateStudent() {
 		System.out.print("Choose student to edit by id: ");
 		int id = new Scanner(System.in).nextInt();
-		if (StudentService.getInstances().getStudentByID(id) != null) {
+		if (StudentService.getInstances().get(id) != null) {
 			System.out.print("input Name: ");
 			String name = new Scanner(System.in).nextLine();
 
@@ -76,12 +76,12 @@ public class TestMain {
 			String sex = new Scanner(System.in).nextLine();
 
 			System.out.print("input ID_Class: ");
-			int id_Class = new Scanner(System.in).nextInt();
+			int idClass = new Scanner(System.in).nextInt();
 
-			Classes classes = new Classes(id_Class);
+			Classes classes = new Classes(idClass);
 			Student st = new Student(id,name, dateOfBirth, sex, classes);
 			
-			return StudentService.getInstances().updateStudent(st);
+			return StudentService.getInstances().update(st);
 		} else {
 			System.out.println("Student do not exist");
 		}
@@ -93,9 +93,9 @@ public class TestMain {
 	public static boolean deleteStudent() {
 		System.out.print("Choose student to delete by id: ");
 		int id = new Scanner(System.in).nextInt();
-		if (StudentService.getInstances().getStudentByID(id) != null) {
+		if (StudentService.getInstances().get(id) != null) {
 			Student student = new Student(id);
-			return StudentService.getInstances().deleteStudent(student);
+			return StudentService.getInstances().delete(student);
 		} else {
 			System.out.println("Student do not exist");
 		}
@@ -105,7 +105,7 @@ public class TestMain {
 	 * 5.
 	 */
 	public static void showAllClass() {
-		ArrayList<Classes> listStudent = (ArrayList<Classes>)ClassesService.getInstance().getAllClass();
+		ArrayList<Classes> listStudent = (ArrayList<Classes>)ClassesService.getInstance().getAll();
 		System.out.println("========== List Class ==========");
 		System.out.println(listStudent);
 	}
@@ -114,8 +114,8 @@ public class TestMain {
 	 */
 	public static void showListStudenByClass() {
 		System.out.println("Input Id class: ");
-		int id_class = new Scanner(System.in).nextInt();
-		List<Student> listStudent = StudentService.getInstances().getListStudentByClass(id_class);
+		int idClass = new Scanner(System.in).nextInt();
+		List<Student> listStudent = StudentService.getInstances().getListStudentByClass(idClass);
 		if(listStudent.size() > 0) {
 			System.out.println(listStudent);
 		}else {
@@ -129,20 +129,20 @@ public class TestMain {
 		System.out.println("Input ClassName: ");
 		String className = new Scanner(System.in).nextLine();
 		Classes classes = new Classes(className);
-		return ClassesService.getInstance().saveClass(classes);
+		return ClassesService.getInstance().save(classes);
 	}
 	/*
 	 * 8.
 	 */
 	public static boolean updateClass() {
 		System.out.println("Input id class to edit: ");
-		int id_Class = new Scanner(System.in).nextInt();
-		if(ClassesService.getInstance().getClassById(id_Class) != null) {
+		int idClass = new Scanner(System.in).nextInt();
+		if(ClassesService.getInstance().get(idClass) != null) {
 			System.out.println("Input ClassName: ");
 			String className = new Scanner(System.in).nextLine();
-			Classes classes = new Classes(id_Class,className);
+			Classes classes = new Classes(idClass,className);
 			
-			return ClassesService.getInstance().updateClass(classes);
+			return ClassesService.getInstance().update(classes);
 		}else {
 			System.out.println("Class do not exist");
 		}
@@ -153,11 +153,11 @@ public class TestMain {
 	 */
 	public static boolean deleteClass() {
 		System.out.println("Input id class to delete: ");
-		int id_Class = new Scanner(System.in).nextInt();
+		int idClass = new Scanner(System.in).nextInt();
 		
-		if(ClassesService.getInstance().getClassById(id_Class) != null) {
-			Classes classes = new Classes(id_Class);
-			return ClassesService.getInstance().deleteClass(classes);
+		if(ClassesService.getInstance().get(idClass) != null) {
+			Classes classes = new Classes(idClass);
+			return ClassesService.getInstance().delete(classes);
 		}else {
 			System.out.println("Class do not exist");
 		}

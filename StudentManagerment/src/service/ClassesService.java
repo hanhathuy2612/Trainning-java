@@ -8,7 +8,7 @@ import dao.ClassesDAO;
 import dao.Dao;
 import entities.Classes;
 
-public class ClassesService {
+public class ClassesService implements Service<Classes>{
 	private static ClassesService instance;
 
 	public static ClassesService getInstance() {
@@ -17,30 +17,35 @@ public class ClassesService {
 		}
 		return instance;
 	}
-	
-	public Optional<Classes> getClassById(int id) {
+	@Override
+	public Optional<Classes> get(int id) {
 		return ClassesDAO.getInstances().get(id);
 	}
-	public Collection<Classes> getAllClass(){
+
+	@Override
+	public Collection<Classes> getAll() {
 		return ClassesDAO.getInstances().getAll();
 	}
-	
-	public boolean saveClass(Classes classes) {
-		if(ClassesDAO.getInstances().save(classes) > 0) {
+
+	@Override
+	public boolean save(Classes t) {
+		if(ClassesDAO.getInstances().save(t) > 0) {
 			return true;
 		}
 		return false;
 	}
-	
-	public boolean updateClass(Classes classes) {
-		if(ClassesDAO.getInstances().update(classes) > 0) {
+
+	@Override
+	public boolean update(Classes t) {
+		if(ClassesDAO.getInstances().update(t) > 0) {
 			return true;
 		}
 		return false;
 	}
-	
-	public boolean deleteClass(Classes classes) {
-		if(ClassesDAO.getInstances().delete(classes) > 0) {
+
+	@Override
+	public boolean delete(Classes t) {
+		if(ClassesDAO.getInstances().delete(t) >= 0) {
 			return true;
 		}
 		return false;

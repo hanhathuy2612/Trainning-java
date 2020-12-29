@@ -23,7 +23,6 @@ public class StudentDAO implements Dao<Student>{
 		return instances;
 	}
 
-
 	public ArrayList<Student> getListStudentByClass(int id_class){
 		ArrayList<Student> listStudent = new ArrayList<Student>();
 		Connection con = new DataConnection().getcn();

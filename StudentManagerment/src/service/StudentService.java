@@ -9,7 +9,7 @@ import dao.StudentDAO;
 import entities.Classes;
 import entities.Student;
 
-public class StudentService {
+public class StudentService implements Service<Student>{
 	
 	private static StudentService instances;
 	
@@ -19,33 +19,38 @@ public class StudentService {
 		}
 		return instances;
 	}
-	
-	public Optional<Student> getStudentByID(int id){
+	public ArrayList<Student> getListStudentByClass(int idClass){
+		return StudentDAO.getInstances().getListStudentByClass(idClass);
+	}
+	@Override
+	public Optional<Student> get(int id) {
 		return StudentDAO.getInstances().get(id);
 	}
-	
-	public Collection<Student> getAllStudent(){
+
+	@Override
+	public Collection<Student> getAll() {
 		return StudentDAO.getInstances().getAll();
 	}
-	public ArrayList<Student> getListStudentByClass(int id){
-		return StudentDAO.getInstances().getListStudentByClass(id);
-	}
-	public boolean saveStudent(Student st) {
-		if(StudentDAO.getInstances().save(st) > 0) {
+
+	@Override
+	public boolean save(Student t) {
+		if(StudentDAO.getInstances().save(t) > 0) {
 			return true;
 		}
 		return false;
 	}
-	
-	public boolean updateStudent(Student st) {
-		if(StudentDAO.getInstances().update(st) > 0) {
+
+	@Override
+	public boolean update(Student t) {
+		if(StudentDAO.getInstances().update(t) > 0) {
 			return true;
 		}
 		return false;
 	}
-	
-	public boolean deleteStudent(Student st) {
-		if(StudentDAO.getInstances().delete(st) > 0) {
+
+	@Override
+	public boolean delete(Student t) {
+		if(StudentDAO.getInstances().delete(t) > 0) {
 			return true;
 		}
 		return false;
