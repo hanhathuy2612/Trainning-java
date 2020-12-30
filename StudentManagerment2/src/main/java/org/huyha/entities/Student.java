@@ -10,7 +10,7 @@ import java.util.Date;
 public class Student implements java.io.Serializable {
 
 	private Integer id;
-	private Class class_;
+	private Classes class_;
 	private String name;
 	private Date dateOfBirth;
 	private Boolean sex;
@@ -18,7 +18,7 @@ public class Student implements java.io.Serializable {
 	public Student() {
 	}
 
-	public Student(Class class_, String name, Date dateOfBirth, Boolean sex) {
+	public Student(Classes class_, String name, Date dateOfBirth, Boolean sex) {
 		this.class_ = class_;
 		this.name = name;
 		this.dateOfBirth = dateOfBirth;
@@ -35,11 +35,11 @@ public class Student implements java.io.Serializable {
 
 	
 
-	public Class getClass_() {
+	public Classes getClass_() {
 		return class_;
 	}
 
-	public void setClass(Class class_) {
+	public void setClass(Classes class_) {
 		this.class_ = class_;
 	}
 

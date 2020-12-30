@@ -7,9 +7,10 @@ public class MySessionFactory {
 	private static SessionFactory instances = null;
 
 	public static SessionFactory getInstances() {
-		if(instances == null) {
+		if (instances == null) {
 			instances = new Configuration().configure().buildSessionFactory();
 		}
+		
 		return instances;
 	}
 }
