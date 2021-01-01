@@ -21,16 +21,16 @@ public class App {
 		for (Student st : StudentDAO.getStudentDAO().getAll()) {
 			System.out.println(st.getId() + ", " + st.getName());
 		}
-		Student student = StudentDAO.getStudentDAO().get(26).get();
-		student.setName("Hà Nhật Chương");
-		if (StudentDAO.getStudentDAO().update(student) == 1) {
-			System.out.println("Save sucesssful");
-		} else {
-			System.out.println("Save fail");
-		}
-		for (Student st : StudentDAO.getStudentDAO().getAll()) {
-			System.out.println(st.getId() + ", " + st.getName());
-		}
+//		Student student = StudentDAO.getStudentDAO().get(26).get();
+//		student.setName("Hà Nhật Chương");
+//		if (StudentDAO.getStudentDAO().update(student) == 1) {
+//			System.out.println("Save sucesssful");
+//		} else {
+//			System.out.println("Save fail");
+//		}
+//		for (Student st : StudentDAO.getStudentDAO().getAll()) {
+//			System.out.println(st.getId() + ", " + st.getName());
+//		}
 //		System.out.println(StudentDAO.getStudentDAO().get(2).get().getName());
 //		System.out.println(ClassesDAO.getClassesDAO().get(1).get().getClassName());
 	}

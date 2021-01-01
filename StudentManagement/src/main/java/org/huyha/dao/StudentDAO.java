@@ -21,29 +21,47 @@ public class StudentDAO implements Dao<Student> {
 		return studentDAO;
 	}
 
+	/*
+	 * get a Student
+	 */
 	public Optional<Student> get(int id) {
 		SessionFactory factory = HibernateUtils.getSessionFactory();
+
 		Session session = factory.getCurrentSession();
+
 		Student st = null;
+
 		try {
 			session.getTransaction().begin();
+
 			String sql = "Select e from " + Student.class.getName() + " e " + " where e.id = :Id ";
+
 			Query<Student> query = session.createQuery(sql);
+
 			query.setParameter("Id", id);
+
 			st = query.getSingleResult();
+
 			session.getTransaction().commit();
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			session.getTransaction().rollback();
 		}
+
 		return Optional.of(st);
 	}
 
+	/*
+	 * get all Student
+	 */
 	public Collection<Student> getAll() {
 		List<Student> students = new ArrayList<Student>();
 
 		SessionFactory factory = HibernateUtils.getSessionFactory();
+
 		Session session = factory.getCurrentSession();
+
 		try {
 
 			session.getTransaction().begin();
@@ -62,15 +80,24 @@ public class StudentDAO implements Dao<Student> {
 		return students;
 	}
 
+	/*
+	 * save a student
+	 */
 	public int save(Student t) {
 		int kq = 0;
+
 		SessionFactory factory = HibernateUtils.getSessionFactory();
+
 		Session session = factory.getCurrentSession();
 		try {
 			session.getTransaction().begin();
+
 			session.save(t);
+
 			kq = 1;
+
 			session.flush();
+
 			session.getTransaction().commit();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -79,15 +106,24 @@ public class StudentDAO implements Dao<Student> {
 		return kq;
 	}
 
+	/*
+	 * update a student
+	 */
 	public int update(Student t) {
 		int kq = 0;
+
 		SessionFactory factory = HibernateUtils.getSessionFactory();
+
 		Session session = factory.getCurrentSession();
 		try {
 			session.getTransaction().begin();
+
 			session.update(t);
+
 			kq = 1;
+
 			session.flush();
+
 			session.getTransaction().commit();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -96,15 +132,24 @@ public class StudentDAO implements Dao<Student> {
 		return kq;
 	}
 
+	/*
+	 * delete a student
+	 */
 	public int delete(Student t) {
 		int kq = 0;
+
 		SessionFactory factory = HibernateUtils.getSessionFactory();
+
 		Session session = factory.getCurrentSession();
 		try {
 			session.getTransaction().begin();
+
 			session.delete(t);
+
 			kq = 1;
+
 			session.flush();
+
 			session.getTransaction().commit();
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -8,7 +8,7 @@ import org.huyha.entities.Classes;
 
 public class ClassesService implements Serviece<Classes> {
 	private static ClassesService service;
-
+	
 	public static ClassesService getService() {
 		if (service == null) {
 			service = new ClassesService();
