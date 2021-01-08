@@ -1,4 +1,4 @@
-package org.huyha.studentManagement;
+package org.huyha.test;
 
 import java.util.Date;
 import java.util.Iterator;
