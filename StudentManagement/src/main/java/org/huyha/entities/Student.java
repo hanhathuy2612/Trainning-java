@@ -86,8 +86,8 @@ public class Student {
 
 	@Override
 	public String toString() {
-		return "Student [id=" + id + ", name=" + name + ", dateOfBirth=" + dateOfBirth + ", sex=" + sex + ", classes="
-				+ classes + "]";
+		return "Student [getId()=" + getId() + ", getName()=" + getName() + ", getDateOfBirth()=" + getDateOfBirth()
+				+ ", isSex()=" + isSex() + ", getClasses()=" + getClasses() + "]";
 	}
 
 }

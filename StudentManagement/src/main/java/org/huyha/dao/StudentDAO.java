@@ -5,6 +5,9 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -34,13 +37,7 @@ public class StudentDAO implements Dao<Student> {
 		try {
 			session.getTransaction().begin();
 
-			String sql = "Select e from " + Student.class.getName() + " e " + " where e.id = :Id ";
-
-			Query<Student> query = session.createQuery(sql);
-
-			query.setParameter("Id", id);
-
-			st = query.getSingleResult();
+			st = (Student) session.get(Student.class, id);
 
 			session.getTransaction().commit();
 
@@ -66,11 +63,10 @@ public class StudentDAO implements Dao<Student> {
 
 			session.getTransaction().begin();
 
-			String sql = "Select e from " + Student.class.getName() + " e ";
-
-			Query<Student> query = session.createQuery(sql);
-
-			students = query.getResultList();
+			CriteriaBuilder cb = session.getCriteriaBuilder();
+			CriteriaQuery<Student> cq = cb.createQuery(Student.class);
+			cq.from(Student.class);
+			students = session.createQuery(cq).getResultList();
 
 			session.getTransaction().commit();
 		} catch (Exception e) {

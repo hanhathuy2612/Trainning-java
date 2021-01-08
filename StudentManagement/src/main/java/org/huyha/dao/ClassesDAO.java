@@ -5,10 +5,14 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.huyha.entities.Classes;
+import org.huyha.entities.Student;
 import org.huyha.utils.HibernateUtils;
 
 public class ClassesDAO implements Dao<Classes> {
@@ -34,13 +38,7 @@ public class ClassesDAO implements Dao<Classes> {
 		try {
 			session.getTransaction().begin();
 
-			String sql = "Select e from " + Classes.class.getName() + " e " + " where e.idClass = :id ";
-
-			Query<Classes> query = session.createQuery(sql);
-
-			query.setParameter("id", id);
-
-			classes = query.getSingleResult();
+			classes = (Classes) session.get(Classes.class, id);
 
 			session.getTransaction().commit();
 
@@ -65,14 +63,12 @@ public class ClassesDAO implements Dao<Classes> {
 		try {
 			session.getTransaction().begin();
 
-			String sql = "Select e from " + Classes.class.getName() + " e";
-
-			Query<Classes> query = session.createQuery(sql);
-
-			classes = query.getResultList();
+			CriteriaBuilder cb = session.getCriteriaBuilder();
+			CriteriaQuery<Classes> cq = cb.createQuery(Classes.class);
+			cq.from(Classes.class);
+			classes = session.createQuery(cq).getResultList();
 
 			session.getTransaction().commit();
-
 		} catch (Exception e) {
 			e.printStackTrace();
 			session.getTransaction().rollback();
