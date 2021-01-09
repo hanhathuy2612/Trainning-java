@@ -6,6 +6,14 @@ import java.util.Optional;
 import org.huyha.entities.Student;
 
 public class StudentDAO implements Dao<Student> {
+	private static StudentDAO instance;
+
+	public static StudentDAO getInstance() {
+		if (instance == null) {
+			instance = new StudentDAO();
+		}
+		return instance;
+	}
 
 	public Optional<Student> get(int id, Class<Student> type) {
 		return HibernateDAO.getInstance().get(id, type);

@@ -18,29 +18,29 @@ public class ClassesService {
 	}
 
 	public Optional<Classes> get(int id, Class<Classes> type) {
-		return HibernateDAO.getInstance().get(id, type);
+		return ClassesDAO.getInstance().get(id, type);
 	}
 
 	public Collection<Classes> getAll(Class<Classes> type) {
-		return HibernateDAO.getInstance().getAll(type);
+		return ClassesDAO.getInstance().getAll(type);
 	}
 
 	public boolean save(Classes t) {
-		if (HibernateDAO.getInstance().save(t) == 1) {
+		if (ClassesDAO.getInstance().save(t) == 1) {
 			return true;
 		}
 		return false;
 	}
 
 	public boolean update(Classes t) {
-		if (HibernateDAO.getInstance().update(t) == 1) {
+		if (ClassesDAO.getInstance().update(t) == 1) {
 			return true;
 		}
 		return false;
 	}
 
 	public boolean delete(Classes t) {
-		if (HibernateDAO.getInstance().delete(t) == 1) {
+		if (ClassesDAO.getInstance().delete(t) == 1) {
 			return true;
 		}
 		return false;

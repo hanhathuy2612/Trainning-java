@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.Optional;
 
 import org.huyha.dao.HibernateDAO;
+import org.huyha.dao.StudentDAO;
 import org.huyha.entities.Student;
 
 public class StudentService {
@@ -17,29 +18,29 @@ public class StudentService {
 	}
 
 	public Optional<Student> get(int id, Class<Student> type) {
-		return HibernateDAO.getInstance().get(id, type);
+		return StudentDAO.getInstance().get(id, type);
 	}
 
 	public Collection<Student> getAll(Class<Student> type) {
-		return HibernateDAO.getInstance().getAll(type);
+		return StudentDAO.getInstance().getAll(type);
 	}
 
 	public boolean save(Student t) {
-		if (HibernateDAO.getInstance().save(t) == 1) {
+		if (StudentDAO.getInstance().save(t) == 1) {
 			return true;
 		}
 		return false;
 	}
 
 	public boolean update(Student t) {
-		if (HibernateDAO.getInstance().update(t) == 1) {
+		if (StudentDAO.getInstance().update(t) == 1) {
 			return true;
 		}
 		return false;
 	}
 
 	public boolean delete(Student t) {
-		if (HibernateDAO.getInstance().delete(t) == 1) {
+		if (StudentDAO.getInstance().delete(t) == 1) {
 			return true;
 		}
 		return false;
