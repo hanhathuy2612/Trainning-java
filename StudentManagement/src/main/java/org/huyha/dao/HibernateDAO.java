@@ -1,5 +1,6 @@
 package org.huyha.dao;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -10,35 +11,29 @@ import javax.persistence.criteria.CriteriaQuery;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.query.Query;
-import org.huyha.entities.Classes;
-import org.huyha.entities.Student;
 import org.huyha.utils.HibernateUtils;
 
-public class ClassesDAO implements Dao<Classes> {
-	private static ClassesDAO classesDAO;
+public class HibernateDAO<T> implements Dao<T> {
+	private static HibernateDAO instance;
 
-	public static ClassesDAO getClassesDAO() {
-		if (classesDAO == null) {
-			classesDAO = new ClassesDAO();
+	public static HibernateDAO getInstance() {
+		if (instance == null) {
+			instance = new HibernateDAO();
 		}
-		return classesDAO;
+		return instance;
 	}
 
-	/*
-	 * get a Classes
-	 */
-	public Optional<Classes> get(int id) {
+	public Optional<T> get(int id, Class<T> type) {
 		SessionFactory factory = HibernateUtils.getSessionFactory();
 
 		Session session = factory.getCurrentSession();
 
-		Classes classes = new Classes();
+		T classes = null;
 
 		try {
 			session.getTransaction().begin();
 
-			classes = (Classes) session.get(Classes.class, id);
+			classes = session.get(type, id);
 
 			session.getTransaction().commit();
 
@@ -50,22 +45,19 @@ public class ClassesDAO implements Dao<Classes> {
 		return Optional.of(classes);
 	}
 
-	/*
-	 * get all Classes
-	 */
-	public Collection<Classes> getAll() {
+	public Collection<T> getAll(Class<T> type) {
 		SessionFactory factory = HibernateUtils.getSessionFactory();
 
 		Session session = factory.getCurrentSession();
 
-		List<Classes> classes = new ArrayList<Classes>();
+		List<T> classes = new ArrayList<T>();
 
 		try {
 			session.getTransaction().begin();
 
 			CriteriaBuilder cb = session.getCriteriaBuilder();
-			CriteriaQuery<Classes> cq = cb.createQuery(Classes.class);
-			cq.from(Classes.class);
+			CriteriaQuery<T> cq = cb.createQuery(type);
+			cq.from(type);
 			classes = session.createQuery(cq).getResultList();
 
 			session.getTransaction().commit();
@@ -77,17 +69,12 @@ public class ClassesDAO implements Dao<Classes> {
 		return classes;
 	}
 
-	/*
-	 * save Classes
-	 */
-	public int save(Classes t) {
+	public int save(T t) {
 		int kq = 0;
 
 		SessionFactory factory = HibernateUtils.getSessionFactory();
 
 		Session session = factory.getCurrentSession();
-
-		List<Classes> classes = new ArrayList<Classes>();
 
 		try {
 			session.getTransaction().begin();
@@ -108,17 +95,12 @@ public class ClassesDAO implements Dao<Classes> {
 		return kq;
 	}
 
-	/*
-	 * update Classes
-	 */
-	public int update(Classes t) {
+	public int update(T t) {
 		int kq = 0;
 
 		SessionFactory factory = HibernateUtils.getSessionFactory();
 
 		Session session = factory.getCurrentSession();
-
-		List<Classes> classes = new ArrayList<Classes>();
 
 		try {
 			session.getTransaction().begin();
@@ -139,17 +121,12 @@ public class ClassesDAO implements Dao<Classes> {
 		return kq;
 	}
 
-	/*
-	 * delete Classes
-	 */
-	public int delete(Classes t) {
+	public int delete(T t) {
 		int kq = 0;
 
 		SessionFactory factory = HibernateUtils.getSessionFactory();
 
 		Session session = factory.getCurrentSession();
-
-		List<Classes> classes = new ArrayList<Classes>();
 
 		try {
 			session.getTransaction().begin();

@@ -4,10 +4,10 @@ import java.util.Collection;
 import java.util.Optional;
 
 public interface Serviece<T> {
-	
-	Optional<T> get(int id);
 
-	Collection<T> getAll();
+	Optional<T> get(int id, Class<T> type);
+
+	Collection<T> getAll(Class<T> type);
 
 	boolean save(T t);
 
