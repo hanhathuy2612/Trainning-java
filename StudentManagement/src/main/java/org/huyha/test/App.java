@@ -11,14 +11,14 @@ import org.hibernate.query.Query;
 import org.huyha.dao.HibernateDAO;
 import org.huyha.entities.Classes;
 import org.huyha.entities.Student;
-import org.huyha.service.HibernateService;
+import org.huyha.service.ClassesService;
 import org.huyha.utils.DataUtils;
 import org.huyha.utils.HibernateUtils;
 
 public class App {
 	public static void main(String[] args) {
 		Classes classes = new Classes("Lớp F");
-		if (HibernateService.getInstance().save(classes)) {
+		if (ClassesService.getInstance().save(classes)) {
 			System.out.println("Save sucessful");
 		} else {
 			System.out.println("Save fail");
