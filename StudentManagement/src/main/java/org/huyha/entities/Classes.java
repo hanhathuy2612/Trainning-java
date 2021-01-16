@@ -16,7 +16,7 @@ import org.huyha.dao.HibernateDAO;
 
 @Entity
 @Table(name = "Classes")
-public class Classes extends HibernateDAO<Classes>{
+public class Classes{
 	private int idClass;
 	private String className;
 	private Set<Student> employees = new HashSet<Student>(0);

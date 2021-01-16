@@ -18,7 +18,7 @@ import org.huyha.dao.HibernateDAO;
 
 @Entity
 @Table(name = "Student")
-public class Student extends HibernateDAO<Student>{
+public class Student {
 	private int id;
 	private String name;
 	private Date dateOfBirth;
