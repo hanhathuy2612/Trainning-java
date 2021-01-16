@@ -16,7 +16,7 @@ public class Service {
 		return instance;
 	}
 
-	public void addListStudent(List<Student> listStudent, Classes classes) {
+	public void addListStudentToClass(List<Student> listStudent, Classes classes) {
 		
 		for (Student st : listStudent) {
 			

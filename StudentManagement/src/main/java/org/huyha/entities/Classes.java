@@ -25,6 +25,11 @@ public class Classes extends HibernateDAO<Classes>{
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	
+	public Classes(int idClass) {
+		super();
+		this.idClass = idClass;
+	}
 
 	public Classes(String className) {
 		super();

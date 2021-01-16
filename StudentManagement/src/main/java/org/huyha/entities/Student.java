@@ -29,12 +29,11 @@ public class Student extends HibernateDAO<Student>{
 
 	}
 
-	public Student(String name, Date dateOfBirth, boolean sex, Classes classes) {
+	public Student(String name, Date dateOfBirth, boolean sex) {
 		super();
 		this.name = name;
 		this.dateOfBirth = dateOfBirth;
 		this.sex = sex;
-		this.classes = classes;
 	}
 
 	@Id
