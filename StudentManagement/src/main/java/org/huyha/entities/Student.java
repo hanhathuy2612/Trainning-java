@@ -14,9 +14,11 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.huyha.dao.HibernateDAO;
+
 @Entity
 @Table(name = "Student")
-public class Student {
+public class Student extends HibernateDAO<Student>{
 	private int id;
 	private String name;
 	private Date dateOfBirth;

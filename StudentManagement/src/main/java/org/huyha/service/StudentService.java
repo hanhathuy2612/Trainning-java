@@ -16,34 +16,6 @@ public class StudentService {
 		}
 		return instance;
 	}
-
-	public Optional<Student> get(int id, Class<Student> type) {
-		return StudentDAO.getInstance().get(id, type);
-	}
-
-	public Collection<Student> getAll(Class<Student> type) {
-		return StudentDAO.getInstance().getAll(type);
-	}
-
-	public boolean save(Student t) {
-		if (StudentDAO.getInstance().save(t) == 1) {
-			return true;
-		}
-		return false;
-	}
-
-	public boolean update(Student t) {
-		if (StudentDAO.getInstance().update(t) == 1) {
-			return true;
-		}
-		return false;
-	}
-
-	public boolean delete(Student t) {
-		if (StudentDAO.getInstance().delete(t) == 1) {
-			return true;
-		}
-		return false;
-	}
-
+	
+	
 }

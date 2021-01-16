@@ -12,9 +12,11 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.huyha.dao.HibernateDAO;
+
 @Entity
 @Table(name = "Classes")
-public class Classes {
+public class Classes extends HibernateDAO<Classes>{
 	private int idClass;
 	private String className;
 	private Set<Student> employees = new HashSet<Student>(0);
