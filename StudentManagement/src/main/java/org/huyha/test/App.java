@@ -14,6 +14,8 @@ import org.huyha.dao.HibernateDAO;
 import org.huyha.dao.StudentDAO;
 import org.huyha.entities.Classes;
 import org.huyha.entities.Student;
+import org.huyha.entities.Subjects;
+import org.huyha.entities.Teacher;
 import org.huyha.service.ClassesService;
 import org.huyha.service.Service;
 import org.huyha.service.StudentService;
@@ -22,20 +24,25 @@ import org.huyha.utils.HibernateUtils;
 
 public class App {
 	public static void main(String[] args) {
-		Classes classes = new Classes(2);
-		
-		Student st1 = new Student("Hà Nhật Huy", new Date(), true);
-		Student st2 = new Student("Lý Kim Nhân", new Date(), false);
-		Student st3 = new Student("Đào Minh Nhật", new Date(), true);
-		
+
+		Subjects subjects = new Subjects(1);
+
+		Teacher teacher = new Teacher(3);
+
+		Classes classes = new Classes(1);
+
+		Student st1 = new Student("Lý Nhã Nhị Ngọc", new Date(), true);
+		Student st2 = new Student("Trần Phong Nhã", new Date(), false);
+		Student st3 = new Student("Gái Nhật Đó Matamisu", new Date(), true);
+
 		List<Student> listStudent = new ArrayList<Student>();
 		listStudent.add(st1);
 		listStudent.add(st2);
 		listStudent.add(st3);
-		
-		Service.getInstance().addListStudentToClass(listStudent, classes);
-		
-		for(Student st: StudentDAO.getInstance().getAll(Student.class)) {
+
+		Service.getInstance().addListStudentToClass(listStudent, classes, teacher, subjects);
+
+		for (Student st : StudentDAO.getInstance().getAll(Student.class)) {
 			System.out.println(st.getName());
 		}
 	}

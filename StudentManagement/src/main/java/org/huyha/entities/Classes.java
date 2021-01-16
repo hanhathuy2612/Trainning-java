@@ -9,6 +9,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -16,16 +18,19 @@ import org.huyha.dao.HibernateDAO;
 
 @Entity
 @Table(name = "Classes")
-public class Classes{
+public class Classes {
+
 	private int idClass;
 	private String className;
+	private Subjects subjects;
+	private Teacher teacher;
 	private Set<Student> employees = new HashSet<Student>(0);
 
 	public Classes() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	
+
 	public Classes(int idClass) {
 		super();
 		this.idClass = idClass;
@@ -63,6 +68,26 @@ public class Classes{
 
 	public void setEmployees(Set<Student> employees) {
 		this.employees = employees;
+	}
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "IdSubjects")
+	public Subjects getSubjects() {
+		return subjects;
+	}
+
+	public void setSubjects(Subjects subjects) {
+		this.subjects = subjects;
+	}
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "IdTeacher")
+	public Teacher getTeacher() {
+		return teacher;
+	}
+
+	public void setTeacher(Teacher teacher) {
+		this.teacher = teacher;
 	}
 
 }
