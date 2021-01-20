@@ -3,7 +3,9 @@ package org.huyha.entities;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -24,7 +26,7 @@ public class Classes {
 	private String className;
 	private Subjects subjects;
 	private Teacher teacher;
-	private Set<Student> employees = new HashSet<Student>(0);
+	private Set<Student> students = new HashSet<Student>(0);
 
 	public Classes() {
 		super();
@@ -54,8 +56,8 @@ public class Classes {
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "classes")
-	public Set<Student> getEmployees() {
-		return employees;
+	public Set<Student> getStudents() {
+		return students;
 	}
 
 	public void setIdClass(int idClass) {
@@ -66,8 +68,9 @@ public class Classes {
 		this.className = className;
 	}
 
-	public void setEmployees(Set<Student> employees) {
-		this.employees = employees;
+
+	public void setStudents(Set<Student> students) {
+		this.students = students;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)

@@ -9,7 +9,7 @@ public class ClassesDAO extends HibernateDAO<Classes> {
 	private static ClassesDAO instance;
 
 	public static ClassesDAO getInstance() {
-		if(instance == null) {
+		if (instance == null) {
 			instance = new ClassesDAO();
 		}
 		return instance;

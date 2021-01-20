@@ -12,6 +12,8 @@ import org.hibernate.query.Query;
 import org.huyha.dao.ClassesDAO;
 import org.huyha.dao.HibernateDAO;
 import org.huyha.dao.StudentDAO;
+import org.huyha.dao.SubjectsDAO;
+import org.huyha.dao.TeacherDAO;
 import org.huyha.entities.Classes;
 import org.huyha.entities.Student;
 import org.huyha.entities.Subjects;
@@ -25,25 +27,37 @@ import org.huyha.utils.HibernateUtils;
 public class App {
 	public static void main(String[] args) {
 
-		Subjects subjects = new Subjects(1);
-
-		Teacher teacher = new Teacher(3);
-
-		Classes classes = new Classes(1);
-
-		Student st1 = new Student("Lý Nhã Nhị Ngọc", new Date(), true);
-		Student st2 = new Student("Trần Phong Nhã", new Date(), false);
-		Student st3 = new Student("Gái Nhật Đó Matamisu", new Date(), true);
-
-		List<Student> listStudent = new ArrayList<Student>();
-		listStudent.add(st1);
-		listStudent.add(st2);
-		listStudent.add(st3);
-
-		Service.getInstance().addListStudentToClass(listStudent, classes, teacher, subjects);
-
-		for (Student st : StudentDAO.getInstance().getAll(Student.class)) {
-			System.out.println(st.getName());
+//		Subjects subjects = new Subjects(1);
+//
+//		Teacher teacher = new Teacher(3);
+//
+//		Classes classes = new Classes(1);
+//
+//		Student st1 = new Student("Lý Nhã Nhị Ngọc", new Date(), true);
+//		Student st2 = new Student("Trần Phong Nhã", new Date(), false);
+//		Student st3 = new Student("Gái Nhật Đó Matamisu", new Date(), true);
+//
+//		List<Student> listStudent = new ArrayList<Student>();
+//		listStudent.add(st1);
+//		listStudent.add(st2);
+//		listStudent.add(st3);
+//
+//		Service.getInstance().addListStudentToClass(listStudent, classes, teacher, subjects);
+//
+//		for (Student st : StudentDAO.getInstance().getAll(Student.class)) {
+//			System.out.println(st.getName());
+//		}
+		for (Teacher te : TeacherDAO.getInstance().getAll(Teacher.class)) {
+			for (Classes cl : te.getClasses()) {
+				System.out.println(cl.getClassName() + ", " + te.getTeacherName());
+			}
 		}
+//		for(Subjects su :SubjectsDAO.getInstance().getAll(Subjects.class)) {
+//			System.out.println(su.getSubjectName());
+//		}
+//		System.out.println("Class");
+//		for(Classes cl: ClassesDAO.getInstance().getAll(Classes.class)) {
+//			System.out.println(cl.getClassName());
+//		}
 	}
 }

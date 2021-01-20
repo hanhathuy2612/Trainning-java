@@ -19,8 +19,10 @@ public class Service {
 	}
 
 	public void addListStudentToClass(List<Student> listStudent, Classes classes, Teacher teacher, Subjects subjects) {
+		
 		classes.setSubjects(subjects);
 		classes.setTeacher(teacher);
+		
 		for (Student st : listStudent) {
 
 			st.setClasses(classes);

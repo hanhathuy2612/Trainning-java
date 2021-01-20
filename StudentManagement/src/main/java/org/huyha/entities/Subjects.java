@@ -3,6 +3,7 @@ package org.huyha.entities;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -24,8 +25,12 @@ public class Subjects {
 	@Column(name = "Name")
 	private String subjectName;
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "subjects")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "subjects", cascade = CascadeType.ALL)
 	private Set<Classes> classes = new HashSet<Classes>(0);
+
+	public Subjects() {
+		super();
+	}
 
 	public Subjects(int id) {
 		super();
