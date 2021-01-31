@@ -34,9 +34,9 @@ public class App {
 
 		Classes classes = new Classes(2);
 
-		Student st1 = new Student("Hà Huy", new Date(), true);
-		Student st2 = new Student("Hoa Liên", new Date(), false);
-		Student st3 = new Student("Gái Nhật", new Date(), true);
+		Student st1 = new Student("THiên Huy", new Date(), true);
+		Student st2 = new Student("Hoa Anh ĐÀo", new Date(), false);
+		Student st3 = new Student("Gái Việt", new Date(), true);
 
 		List<Student> listStudent = new ArrayList<Student>();
 		listStudent.add(st1);
@@ -52,7 +52,7 @@ public class App {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	
+//	
 		for (Student st : StudentDAO.getInstance().getAll(Student.class)) {
 			System.out.println(st.getName());
 		}

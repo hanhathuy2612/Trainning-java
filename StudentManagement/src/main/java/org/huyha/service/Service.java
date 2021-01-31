@@ -48,31 +48,32 @@ public class Service {
 		Session session = null;
 
 		Transaction tx = null;
-		
-		session = factory.getCurrentSession();
+		try {
+			session = factory.getCurrentSession();
 
-		tx = session.beginTransaction();
+			tx = session.beginTransaction();
 
-		for (Student st : listStudent) {
+			for (Student st : listStudent) {
 
-			st.setClasses(classes);
+				st.setClasses(classes);
 
-			session.save(st);
+				session.save(st);
 
-			if (st.getName().toLowerCase().contains("nhật")) {
+				if (st.getName().toLowerCase().contains("nhật")) {
 
-				check = 1;
+					check = 1;
 
-				tx.rollback();
+					throw new StudentNotAuthorizedException("Tên không hợp lệ");
 
-				throw new StudentNotAuthorizedException("Tên không hợp lệ");
-
+				}
 			}
-		}
 
-		if (check == 0) {
-			tx.commit();
+			if (check == 0) {
+				tx.commit();
+			}
+		} catch (Exception e) {
+			tx.rollback();
+			e.printStackTrace();
 		}
-
 	}
 }
