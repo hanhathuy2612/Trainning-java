@@ -36,7 +36,7 @@ public class App {
 
 		Student st1 = new Student("THiên Huy", new Date(), true);
 		Student st2 = new Student("Hoa Anh ĐÀo", new Date(), false);
-		Student st3 = new Student("Gái Việt", new Date(), true);
+		Student st3 = new Student("Gái Nhật", new Date(), true);
 
 		List<Student> listStudent = new ArrayList<Student>();
 		listStudent.add(st1);

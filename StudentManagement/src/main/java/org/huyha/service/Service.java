@@ -60,17 +60,12 @@ public class Service {
 				session.save(st);
 
 				if (st.getName().toLowerCase().contains("nhật")) {
-
-					check = 1;
-
 					throw new StudentNotAuthorizedException("Tên không hợp lệ");
-
 				}
 			}
 
-			if (check == 0) {
-				tx.commit();
-			}
+			tx.commit();
+
 		} catch (Exception e) {
 			tx.rollback();
 			e.printStackTrace();
