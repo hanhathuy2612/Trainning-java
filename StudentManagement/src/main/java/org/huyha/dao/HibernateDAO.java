@@ -11,11 +11,18 @@ import javax.persistence.criteria.CriteriaQuery;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.huyha.entities.Student;
+import org.huyha.exception.StudentNotAuthorizedException;
 import org.huyha.utils.HibernateUtils;
 
 public class HibernateDAO<T> implements Dao<T> {
 	private static HibernateDAO instance;
 
+	/**
+	 * Singlethon structure
+	 * 
+	 * @return instance
+	 */
 	public static HibernateDAO getInstance() {
 		if (instance == null) {
 			instance = new HibernateDAO();
@@ -23,6 +30,10 @@ public class HibernateDAO<T> implements Dao<T> {
 		return instance;
 	}
 
+	/*
+	 * get entity by id
+	 *
+	 */
 	public Optional<T> get(int id, Class<T> type) {
 		SessionFactory factory = HibernateUtils.getSessionFactory();
 
@@ -45,6 +56,9 @@ public class HibernateDAO<T> implements Dao<T> {
 		return Optional.of(classes);
 	}
 
+	/*
+	 * get all entity
+	 */
 	public Collection<T> getAll(Class<T> type) {
 		SessionFactory factory = HibernateUtils.getSessionFactory();
 
@@ -69,14 +83,15 @@ public class HibernateDAO<T> implements Dao<T> {
 		return classes;
 	}
 
-	public int save(T t) {
+	/*
+	 * save an entity
+	 */
+	public void save(T t) {
 		int kq = 0;
-
 		SessionFactory factory = HibernateUtils.getSessionFactory();
-
 		Session session = factory.getCurrentSession();
-
 		try {
+
 			session.getTransaction().begin();
 
 			session.save(t);
@@ -91,10 +106,11 @@ public class HibernateDAO<T> implements Dao<T> {
 			e.printStackTrace();
 			session.getTransaction().rollback();
 		}
-
-		return kq;
 	}
 
+	/*
+	 * Update an entity
+	 */
 	public int update(T t) {
 		int kq = 0;
 
@@ -121,6 +137,9 @@ public class HibernateDAO<T> implements Dao<T> {
 		return kq;
 	}
 
+	/*
+	 * delete an entity
+	 */
 	public int delete(T t) {
 		int kq = 0;
 
