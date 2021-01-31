@@ -17,8 +17,6 @@ import org.huyha.utils.HibernateUtils;
 public class Service {
 	private static Service instance;
 
-	
-
 	public static Service getInstance() {
 		if (instance == null) {
 			instance = new Service();
@@ -44,38 +42,37 @@ public class Service {
 
 	public void addListStudentToClass(List<Student> listStudent, Classes classes) throws Exception {
 		int check = 0;
-		
+
 		SessionFactory factory = HibernateUtils.getSessionFactory();
-		
+
 		Session session = null;
-		
+
 		Transaction tx = null;
-		try {
-			session = factory.getCurrentSession();
-			tx = session.beginTransaction();
-			for (Student st : listStudent) {
+		
+		session = factory.getCurrentSession();
 
-				st.setClasses(classes);
+		tx = session.beginTransaction();
 
-				session.save(st);
+		for (Student st : listStudent) {
 
-				if (st.getName().toLowerCase().contains("nhật")) {
+			st.setClasses(classes);
 
-					check = 1;
+			session.save(st);
 
-					tx.rollback();
+			if (st.getName().toLowerCase().contains("nhật")) {
 
-					throw new StudentNotAuthorizedException("Tên không hợp lệ");
+				check = 1;
 
-				}
+				tx.rollback();
+
+				throw new StudentNotAuthorizedException("Tên không hợp lệ");
+
 			}
-
-			if (check == 0) {
-				tx.commit();
-			}
-		}catch (Exception e) {
-			tx.rollback();
-			e.printStackTrace();
 		}
+
+		if (check == 0) {
+			tx.commit();
+		}
+
 	}
 }
