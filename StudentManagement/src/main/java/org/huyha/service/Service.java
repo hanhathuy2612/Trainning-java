@@ -6,6 +6,7 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.huyha.dao.HibernateDAO;
 import org.huyha.dao.StudentDAO;
 import org.huyha.entities.Classes;
 import org.huyha.entities.Student;
@@ -43,13 +44,10 @@ public class Service {
 	public void addListStudentToClass(List<Student> listStudent, Classes classes) throws Exception {
 		int check = 0;
 
-		SessionFactory factory = HibernateUtils.getSessionFactory();
-
-		Session session = null;
+		Session session = HibernateDAO.getInstance().getCurrentSession();
 
 		Transaction tx = null;
 		try {
-			session = factory.getCurrentSession();
 
 			tx = session.beginTransaction();
 
@@ -57,7 +55,7 @@ public class Service {
 
 				st.setClasses(classes);
 
-				session.save(st);
+				StudentDAO.getInstance().save(st);
 
 				if (st.getName().toLowerCase().contains("nhật")) {
 					throw new StudentNotAuthorizedException("Tên không hợp lệ");

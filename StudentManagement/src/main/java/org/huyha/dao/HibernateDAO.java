@@ -30,39 +30,28 @@ public class HibernateDAO<T> implements Dao<T> {
 		return instance;
 	}
 
+	/**
+	 * Get currentSession
+	 */
+
+	public Session getCurrentSession() {
+		return HibernateUtils.getSessionFactory().getCurrentSession();
+	}
+
 	/*
 	 * get entity by id
 	 *
 	 */
 	public Optional<T> get(int id, Class<T> type) {
-		SessionFactory factory = HibernateUtils.getSessionFactory();
-
-		Session session = factory.getCurrentSession();
-
-		T classes = null;
-
-		try {
-			session.getTransaction().begin();
-
-			classes = session.get(type, id);
-
-			session.getTransaction().commit();
-
-		} catch (Exception e) {
-			e.printStackTrace();
-			session.getTransaction().rollback();
-		}
-
-		return Optional.of(classes);
+		return Optional.of(getCurrentSession().get(type, id));
 	}
 
 	/*
 	 * get all entity
 	 */
 	public Collection<T> getAll(Class<T> type) {
-		SessionFactory factory = HibernateUtils.getSessionFactory();
 
-		Session session = factory.getCurrentSession();
+		Session session = getCurrentSession();
 
 		List<T> classes = new ArrayList<T>();
 
@@ -86,84 +75,23 @@ public class HibernateDAO<T> implements Dao<T> {
 	/*
 	 * save an entity
 	 */
-	public void save(T t) {
-		int kq = 0;
-		SessionFactory factory = HibernateUtils.getSessionFactory();
-		Session session = factory.getCurrentSession();
-		try {
-
-			session.getTransaction().begin();
-
-			session.save(t);
-
-			kq = 1;
-
-			session.flush();
-
-			session.getTransaction().commit();
-
-		} catch (Exception e) {
-			e.printStackTrace();
-			session.getTransaction().rollback();
-		}
+	public T save(T t) {
+		getCurrentSession().save(t);
+		return t;
 	}
 
 	/*
 	 * Update an entity
 	 */
-	public int update(T t) {
-		int kq = 0;
-
-		SessionFactory factory = HibernateUtils.getSessionFactory();
-
-		Session session = factory.getCurrentSession();
-
-		try {
-			session.getTransaction().begin();
-
-			session.update(t);
-
-			kq = 1;
-
-			session.flush();
-
-			session.getTransaction().commit();
-
-		} catch (Exception e) {
-			e.printStackTrace();
-			session.getTransaction().rollback();
-		}
-
-		return kq;
+	public void update(T t) {
+		getCurrentSession().update(t);
 	}
 
 	/*
 	 * delete an entity
 	 */
-	public int delete(T t) {
-		int kq = 0;
-
-		SessionFactory factory = HibernateUtils.getSessionFactory();
-
-		Session session = factory.getCurrentSession();
-
-		try {
-			session.getTransaction().begin();
-
-			session.delete(t);
-
-			kq = 1;
-
-			session.flush();
-
-			session.getTransaction().commit();
-
-		} catch (Exception e) {
-			e.printStackTrace();
-			session.getTransaction().rollback();
-		}
-
-		return kq;
+	public void delete(T t) {
+		getCurrentSession().detach(t);
 	}
 
 }

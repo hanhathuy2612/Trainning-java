@@ -13,9 +13,9 @@ public interface Dao<T> {
 
 	Collection<T> getAll(Class<T> type);
 
-	void save(T t);
+	T save(T t);
 
-	int update(T t);
+	void update(T t);
 
-	int delete(T t);
+	void delete(T t);
 }
