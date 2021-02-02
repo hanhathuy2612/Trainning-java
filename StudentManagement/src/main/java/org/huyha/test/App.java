@@ -27,47 +27,31 @@ import org.huyha.utils.HibernateUtils;
 
 public class App {
 	public static void main(String[] args) {
-//
-//		Subjects subjects = new Subjects(1);
-//
-//		Teacher teacher = new Teacher(3);
+
+		Subjects subjects = new Subjects(1);
+
+		Teacher teacher = new Teacher(3);
 
 		Classes classes = new Classes(2);
 
-		Student st1 = new Student("THiên Huy", new Date(), true);
-		Student st2 = new Student("Hoa Anh ĐÀo", new Date(), false);
-		Student st3 = new Student("Gái Italia", new Date(), true);
+		Student st1 = new Student("Lý Thái Tài", new Date(), false);
+		Student st2 = new Student("Trai Nhật Đó", new Date(), false);
+		Student st3 = new Student("Gái Italia", new Date(), false);
+		Student st4 = new Student("Hoa Quần Hoa", new Date(), false);
+		Student st5 = new Student("Hồ Nguyễn Liên Hoa", new Date(), true);
 
 		List<Student> listStudent = new ArrayList<Student>();
 		listStudent.add(st1);
 		listStudent.add(st2);
 		listStudent.add(st3);
+		listStudent.add(st4);
+		listStudent.add(st5);
 
-		try {
-			Service.getInstance().addListStudentToClass(listStudent, classes);
-		} catch (StudentNotAuthorizedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-//	
-		for (Student st : StudentDAO.getInstance().getAll(Student.class)) {
-			System.out.println(st.getName());
-		}
-		
-//		for (Teacher te : TeacherDAO.getInstance().getAll(Teacher.class)) {
-//			for (Classes cl : te.getClasses()) {
-//				System.out.println(cl.getClassName() + ", " + te.getTeacherName());
-//			}
+		Service.getInstance().addListStudentToClass(listStudent, classes, teacher, subjects);
+
+//		for (Student st : Service.getInstance().getAllStudents()) {
+//			System.out.println(st.getName());
 //		}
-//		for(Subjects su :SubjectsDAO.getInstance().getAll(Subjects.class)) {
-//			System.out.println(su.getSubjectName());
-//		}
-//		System.out.println("Class");
-//		for(Classes cl: ClassesDAO.getInstance().getAll(Classes.class)) {
-//			System.out.println(cl.getClassName());
-//		}
+
 	}
 }
