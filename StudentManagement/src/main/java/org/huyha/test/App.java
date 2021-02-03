@@ -49,9 +49,9 @@ public class App {
 
 		Service.getInstance().addListStudentToClass(listStudent, classes, teacher, subjects);
 
-//		for (Student st : Service.getInstance().getAllStudents()) {
-//			System.out.println(st.getName());
-//		}
+		for (Student st : Service.getInstance().getAllStudents()) {
+			System.out.println(st.getId() + ", " + st.getName());
+		}
 
 	}
 }

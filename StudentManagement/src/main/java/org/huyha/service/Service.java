@@ -20,8 +20,6 @@ import org.huyha.utils.HibernateUtils;
 
 public class Service {
 	private static Service instance;
-	private Session session = HibernateDAO.getInstance().getCurrentSession();
-	private Transaction tx = null;
 
 	public static Service getInstance() {
 		if (instance == null) {
@@ -58,6 +56,8 @@ public class Service {
 	}
 
 	public void addListStudentToClass(List<Student> listStudent, Classes classes, Teacher teacher, Subjects subjects) {
+		Session session = HibernateDAO.getInstance().getCurrentSession();
+		Transaction tx = null;
 		try {
 			tx = session.beginTransaction();
 
@@ -97,7 +97,8 @@ public class Service {
 	}
 
 	public void addListStudentToClass(List<Student> listStudent, Classes classes) {
-
+		Session session = HibernateDAO.getInstance().getCurrentSession();
+		Transaction tx = null;
 		try {
 
 			tx = session.beginTransaction();
@@ -123,7 +124,9 @@ public class Service {
 	}
 
 	public List<Student> getAllStudents() {
+		Session session = HibernateDAO.getInstance().getCurrentSession();
 		List<Student> list = new ArrayList<Student>();
+		Transaction tx = null;
 		try {
 
 			tx = session.beginTransaction();
