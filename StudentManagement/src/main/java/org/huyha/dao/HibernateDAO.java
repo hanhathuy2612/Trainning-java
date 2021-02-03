@@ -53,12 +53,12 @@ public class HibernateDAO<T> implements Dao<T> {
 
 //		Session session = getCurrentSession();
 //
-//		List<T> classes = new ArrayList<T>();
+//		List<T> entities = new ArrayList<T>();
 //
 //		CriteriaBuilder cb = session.getCriteriaBuilder();
 //		CriteriaQuery<T> cq = cb.createQuery(type);
 //		cq.from(type);
-//		classes = session.createQuery(cq).getResultList();
+//		entities = session.createQuery(cq).getResultList();
 		return getCurrentSession().createQuery("from " + type.getName()).list();
 	}
 
