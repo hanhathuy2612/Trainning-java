@@ -3,9 +3,7 @@ package org.huyha.entities;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -16,21 +14,31 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import org.huyha.dao.HibernateDAO;
-
 @Entity
 @Table(name = "Classes")
 public class Classes {
 
+	@Id
+	@Column(name = "ID_Class")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idClass;
+
+	@Column(name = "className")
 	private String className;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "IdSubjects")
 	private Subjects subjects;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "IdTeacher")
 	private Teacher teacher;
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "classes")
 	private Set<Student> students = new HashSet<Student>(0);
 
 	public Classes() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public Classes(int idClass) {
@@ -43,19 +51,14 @@ public class Classes {
 		this.className = className;
 	}
 
-	@Id
-	@Column(name = "ID_Class")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public int getIdClass() {
 		return idClass;
 	}
 
-	@Column(name = "className")
 	public String getClassName() {
 		return className;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "classes")
 	public Set<Student> getStudents() {
 		return students;
 	}
@@ -68,13 +71,10 @@ public class Classes {
 		this.className = className;
 	}
 
-
 	public void setStudents(Set<Student> students) {
 		this.students = students;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "IdSubjects")
 	public Subjects getSubjects() {
 		return subjects;
 	}
@@ -83,8 +83,6 @@ public class Classes {
 		this.subjects = subjects;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "IdTeacher")
 	public Teacher getTeacher() {
 		return teacher;
 	}

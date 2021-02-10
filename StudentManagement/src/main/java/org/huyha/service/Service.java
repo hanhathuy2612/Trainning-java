@@ -3,9 +3,9 @@ package org.huyha.service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.huyha.dao.ClassesDAO;
 import org.huyha.dao.HibernateDAO;
@@ -17,9 +17,12 @@ import org.huyha.entities.Student;
 import org.huyha.entities.Subjects;
 import org.huyha.entities.Teacher;
 import org.huyha.exception.StudentNotAuthorizedException;
-import org.huyha.utils.HibernateUtils;
 
 public class Service {
+	private StudentDAO studentDAO = StudentDAO.getInstance();
+	private ClassesDAO classesDAO = ClassesDAO.getInstance();
+	private TeacherDAO teacherDAO = TeacherDAO.getInstance();
+	private SubjectsDAO subjectsDAO = SubjectsDAO.getInstance();
 	private static Service instance;
 
 	public static Service getInstance() {
@@ -29,12 +32,8 @@ public class Service {
 		return instance;
 	}
 
-	private StudentDAO studentDAO = StudentDAO.getInstance();
-	private ClassesDAO classesDAO = ClassesDAO.getInstance();
-	private TeacherDAO teacherDAO = TeacherDAO.getInstance();
-
 	public boolean checkContainsSubject(Subjects subjects) {
-		for (Subjects temp : SubjectsDAO.getInstance().getAll(Subjects.class)) {
+		for (Subjects temp : subjectsDAO.getAll()) {
 			if (temp.getId() == subjects.getId()) {
 				return true;
 			}
@@ -43,7 +42,7 @@ public class Service {
 	}
 
 	public boolean checkContainsTeacher(Teacher Teacher) {
-		for (Teacher temp : TeacherDAO.getInstance().getAll(Teacher.class)) {
+		for (Teacher temp : teacherDAO.getAll()) {
 			if (temp.getId() == Teacher.getId()) {
 				return true;
 			}
@@ -52,7 +51,7 @@ public class Service {
 	}
 
 	public boolean checkContainsClasses(Classes classes) {
-		for (Classes temp : ClassesDAO.getInstance().getAll(Classes.class)) {
+		for (Classes temp : classesDAO.getAll()) {
 			if (temp.getIdClass() == classes.getIdClass()) {
 				return true;
 			}
@@ -61,19 +60,19 @@ public class Service {
 	}
 
 	public void addListStudentToClass(List<Student> listStudent, Classes classes, Teacher teacher, Subjects subjects) {
-		Session session = HibernateDAO.getInstance().getCurrentSession();
+		Session session = HibernateDAO.getCurrentSession();
 		Transaction tx = null;
 		try {
 			tx = session.beginTransaction();
 
 			// Check contains subject
 			if (!checkContainsSubject(subjects)) {
-				SubjectsDAO.getInstance().save(subjects);
+				subjectsDAO.save(subjects);
 			}
 
 			// Check contains teacher
 			if (!checkContainsTeacher(teacher)) {
-				TeacherDAO.getInstance().save(teacher);
+				teacherDAO.save(teacher);
 			}
 
 			// Check contains teacher
@@ -86,7 +85,7 @@ public class Service {
 
 			for (Student st : listStudent) {
 				st.setClasses(classes);
-				StudentDAO.getInstance().save(st);
+				studentDAO.save(st);
 
 				if (st.isSex() == true) {
 					throw new StudentNotAuthorizedException("Giới tính phải toàn là nữ");
@@ -102,7 +101,7 @@ public class Service {
 	}
 
 	public void addListStudentToClass(List<Student> listStudent, Classes classes) {
-		Session session = HibernateDAO.getInstance().getCurrentSession();
+		Session session = HibernateDAO.getCurrentSession();
 		Transaction tx = null;
 		try {
 
@@ -112,7 +111,7 @@ public class Service {
 
 				st.setClasses(classes);
 
-				StudentDAO.getInstance().save(st);
+				studentDAO.save(st);
 
 				if (st.getName().toLowerCase().contains("nhật")) {
 					throw new StudentNotAuthorizedException("Tên không hợp lệ");
@@ -129,14 +128,14 @@ public class Service {
 	}
 
 	public List<Student> getAllStudents() {
-		Session session = HibernateDAO.getInstance().getCurrentSession();
+		Session session = HibernateDAO.getCurrentSession();
 		List<Student> list = new ArrayList<Student>();
 		Transaction tx = null;
 		try {
 
 			tx = session.beginTransaction();
 
-			list = (List<Student>) studentDAO.getAll(Student.class);
+			list = studentDAO.getAll();
 
 			tx.commit();
 
@@ -150,7 +149,7 @@ public class Service {
 	 * get students by teacher
 	 */
 	public ArrayList<Student> getStudentByTeacher(Teacher teacher) {
-		Session session = HibernateDAO.getInstance().getCurrentSession();
+		Session session = HibernateDAO.getCurrentSession();
 
 		ArrayList<Student> students = new ArrayList<Student>();
 
@@ -158,9 +157,9 @@ public class Service {
 		try {
 			tx = session.beginTransaction();
 
-			Optional<Teacher> teacher2 = teacherDAO.get(teacher.getId(), Teacher.class);
+			Optional<Teacher> teacher2 = teacherDAO.get(teacher.getId());
 
-			List<Classes> classes = (List<Classes>) teacher2.get().getClasses();
+			Set<Classes> classes = teacher2.get().getClasses();
 
 			for (Classes temp : classes) {
 				for (Student st : temp.getStudents()) {

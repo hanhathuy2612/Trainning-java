@@ -1,40 +1,25 @@
 package org.huyha.dao;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.huyha.entities.Student;
-import org.huyha.exception.StudentNotAuthorizedException;
 import org.huyha.utils.HibernateUtils;
 
-public class HibernateDAO<T> implements Dao<T> {
-	private static HibernateDAO instance;
+public abstract class HibernateDAO<T> implements Dao<T> {
 
-	/**
-	 * Singlethon structure
-	 * 
-	 * @return instance
-	 */
-	public static HibernateDAO getInstance() {
-		if (instance == null) {
-			instance = new HibernateDAO();
-		}
-		return instance;
+	private Class<T> domain;
+
+	public HibernateDAO(Class<T> domain) {
+		super();
+		this.domain = domain;
 	}
 
 	/**
 	 * Get currentSession
 	 */
 
-	public Session getCurrentSession() {
+	public static Session getCurrentSession() {
 		return HibernateUtils.getSessionFactory().getCurrentSession();
 	}
 
@@ -42,24 +27,15 @@ public class HibernateDAO<T> implements Dao<T> {
 	 * get entity by id
 	 *
 	 */
-	public Optional<T> get(int id, Class<T> type) {
-		return Optional.of(getCurrentSession().get(type, id));
+	public Optional<T> get(int id) {
+		return Optional.of(getCurrentSession().get(domain, id));
 	}
 
 	/*
 	 * get all entity
 	 */
-	public Collection<T> getAll(Class<T> type) {
-
-//		Session session = getCurrentSession();
-//
-//		List<T> entities = new ArrayList<T>();
-//
-//		CriteriaBuilder cb = session.getCriteriaBuilder();
-//		CriteriaQuery<T> cq = cb.createQuery(type);
-//		cq.from(type);
-//		entities = session.createQuery(cq).getResultList();
-		return getCurrentSession().createQuery("from " + type.getName()).list();
+	public List<T> getAll() {
+		return getCurrentSession().createQuery("from " + domain.getName(), domain).getResultList();
 	}
 
 	/*

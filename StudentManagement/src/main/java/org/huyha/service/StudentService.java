@@ -1,12 +1,5 @@
 package org.huyha.service;
 
-import java.util.Collection;
-import java.util.Optional;
-
-import org.huyha.dao.HibernateDAO;
-import org.huyha.dao.StudentDAO;
-import org.huyha.entities.Student;
-
 public class StudentService {
 	private static StudentService instance;
 
@@ -16,6 +9,5 @@ public class StudentService {
 		}
 		return instance;
 	}
-	
-	
+
 }
