@@ -14,15 +14,25 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import org.huyha.dao.HibernateDAO;
-
 @Entity
 @Table(name = "Student")
 public class Student {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+	@Column(name = "name")
 	private String name;
+
+	@Column(name = "dateOfBirth")
+	@Temporal(TemporalType.DATE)
 	private Date dateOfBirth;
+
+	@Column(name = "sex")
 	private boolean sex;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "ID_Class")
 	private Classes classes;
 
 	public Student() {
@@ -36,31 +46,22 @@ public class Student {
 		this.sex = sex;
 	}
 
-	@Id
-	@Column(name = "id")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public int getId() {
 		return id;
 	}
 
-	@Column(name = "name")
 	public String getName() {
 		return name;
 	}
 
-	@Column(name = "dateOfBirth")
-	@Temporal(TemporalType.DATE)
 	public Date getDateOfBirth() {
 		return dateOfBirth;
 	}
 
-	@Column(name = "sex")
 	public boolean isSex() {
 		return sex;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "ID_Class")
 	public Classes getClasses() {
 		return classes;
 	}

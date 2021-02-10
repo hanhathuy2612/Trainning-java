@@ -12,14 +12,19 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 @Entity
 @Table(name = "Teacher")
 public class Teacher {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+
+	@Column(name = "Name")
 	private String teacherName;
+
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "teacher", cascade = CascadeType.ALL)
 	private Set<Classes> classes = new HashSet<Classes>(0);
 
 	public Teacher() {
@@ -30,13 +35,12 @@ public class Teacher {
 		super();
 		this.id = id;
 	}
-	
+
 	public Teacher(String teacherName) {
 		super();
 		this.teacherName = teacherName;
 	}
 
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "teacher", cascade = CascadeType.ALL)
 	public Set<Classes> getClasses() {
 		return classes;
 	}
@@ -45,8 +49,6 @@ public class Teacher {
 		this.classes = classes;
 	}
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public int getId() {
 		return id;
 	}
@@ -55,7 +57,6 @@ public class Teacher {
 		this.id = id;
 	}
 
-	@Column(name = "Name")
 	public String getTeacherName() {
 		return teacherName;
 	}
