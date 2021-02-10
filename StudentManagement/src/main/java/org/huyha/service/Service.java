@@ -2,6 +2,7 @@ package org.huyha.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -28,9 +29,9 @@ public class Service {
 		return instance;
 	}
 
-	private StudentDAO studentDAO = new StudentDAO();
-	private ClassesDAO classesDAO = new ClassesDAO();
-	private TeacherDAO teacherDAO = new TeacherDAO();
+	private StudentDAO studentDAO = StudentDAO.getInstance();
+	private ClassesDAO classesDAO = ClassesDAO.getInstance();
+	private TeacherDAO teacherDAO = TeacherDAO.getInstance();
 
 	public boolean checkContainsSubject(Subjects subjects) {
 		for (Subjects temp : SubjectsDAO.getInstance().getAll(Subjects.class)) {
@@ -150,30 +151,28 @@ public class Service {
 	 */
 	public ArrayList<Student> getStudentByTeacher(Teacher teacher) {
 		Session session = HibernateDAO.getInstance().getCurrentSession();
-		
+
 		ArrayList<Student> students = new ArrayList<Student>();
-		
+
 		Transaction tx = null;
 		try {
 			tx = session.beginTransaction();
-			
-			for (Teacher temp : teacherDAO.getAll(Teacher.class)) {
-				
-				if (temp.getTeacherName().equals(teacher.getTeacherName())) {
-					
-					for (Classes classes : temp.getClasses()) {
-						for (Student st : classes.getStudents()) {
-							students.add(st);
-						}
-					}
+
+			Optional<Teacher> teacher2 = teacherDAO.get(teacher.getId(), Teacher.class);
+
+			List<Classes> classes = (List<Classes>) teacher2.get().getClasses();
+
+			for (Classes temp : classes) {
+				for (Student st : temp.getStudents()) {
+					students.add(st);
 				}
 			}
-			
+
 			tx.commit();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		return students;
 	}
 }
