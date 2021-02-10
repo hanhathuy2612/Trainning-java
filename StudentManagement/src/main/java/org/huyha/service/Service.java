@@ -28,6 +28,10 @@ public class Service {
 		return instance;
 	}
 
+	private StudentDAO studentDAO = new StudentDAO();
+	private ClassesDAO classesDAO = new ClassesDAO();
+	private TeacherDAO teacherDAO = new TeacherDAO();
+
 	public boolean checkContainsSubject(Subjects subjects) {
 		for (Subjects temp : SubjectsDAO.getInstance().getAll(Subjects.class)) {
 			if (temp.getId() == subjects.getId()) {
@@ -73,7 +77,7 @@ public class Service {
 
 			// Check contains teacher
 			if (!checkContainsClasses(classes)) {
-				ClassesDAO.getInstance().save(classes);
+				classesDAO.save(classes);
 			}
 
 			classes.setTeacher(teacher);
@@ -131,7 +135,7 @@ public class Service {
 
 			tx = session.beginTransaction();
 
-			list = (ArrayList<Student>) StudentDAO.getInstance().getAll(Student.class);
+			list = (List<Student>) studentDAO.getAll(Student.class);
 
 			tx.commit();
 
@@ -139,5 +143,37 @@ public class Service {
 			e.printStackTrace();
 		}
 		return list;
+	}
+
+	/**
+	 * get students by teacher
+	 */
+	public ArrayList<Student> getStudentByTeacher(Teacher teacher) {
+		Session session = HibernateDAO.getInstance().getCurrentSession();
+		
+		ArrayList<Student> students = new ArrayList<Student>();
+		
+		Transaction tx = null;
+		try {
+			tx = session.beginTransaction();
+			
+			for (Teacher temp : teacherDAO.getAll(Teacher.class)) {
+				
+				if (temp.getTeacherName().equals(teacher.getTeacherName())) {
+					
+					for (Classes classes : temp.getClasses()) {
+						for (Student st : classes.getStudents()) {
+							students.add(st);
+						}
+					}
+				}
+			}
+			
+			tx.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return students;
 	}
 }

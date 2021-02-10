@@ -30,6 +30,11 @@ public class Teacher {
 		super();
 		this.id = id;
 	}
+	
+	public Teacher(String teacherName) {
+		super();
+		this.teacherName = teacherName;
+	}
 
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "teacher", cascade = CascadeType.ALL)
 	public Set<Classes> getClasses() {
