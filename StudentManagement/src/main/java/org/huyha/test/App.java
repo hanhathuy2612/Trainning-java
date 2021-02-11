@@ -1,5 +1,11 @@
 package org.huyha.test;
 
+import java.util.ArrayList;
+
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.huyha.dao.ClassesDAO;
+import org.huyha.dao.HibernateDAO;
 import org.huyha.entities.Student;
 import org.huyha.entities.Teacher;
 import org.huyha.service.Service;
@@ -32,9 +38,17 @@ public class App {
 //			System.out.println(st.getId() + ", " + st.getName());
 //		}
 		
-		for(Student st : Service.getInstance().getStudentByTeacher(new Teacher("Teacher 1"))) {
+		for(Student st : Service.getInstance().getStudentByTeacher(new Teacher(1))) {
 			System.out.println(st.getId() + ", " + st.getName());
 		}
-
+		
+//		Session session = HibernateDAO.getCurrentSession();
+//
+//
+//		Transaction tx = session.beginTransaction();
+//		for(Student st: ClassesDAO.getInstance().get(1).get().getStudents()) {
+//			System.out.println(st.getName());
+//		}
+//		tx.commit();
 	}
 }

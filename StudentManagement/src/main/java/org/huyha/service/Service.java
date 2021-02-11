@@ -1,9 +1,12 @@
 package org.huyha.service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+
+import javax.persistence.Query;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -173,5 +176,35 @@ public class Service {
 		}
 
 		return students;
+	}
+	public Set<Student> getStudentByTeacherSql(Teacher teacher) {
+		Session session = HibernateDAO.getCurrentSession();
+
+		Set<Student> results = new HashSet<Student>();
+
+		Transaction tx = null;
+		try {
+			tx = session.beginTransaction();
+
+			String hql = "SELECT st "
+					+ "FROM Student st"
+					+ "WHERE ID_Class IN ("
+					+ "	SELECT cl.ID_Class"
+					+ "	FROM dbo.Classes cl\r\n"
+					+ "	WHERE cl.IdTeacher IN (\r\n"
+					+ "		SELECT t.ID\r\n"
+					+ "		FROM dbo.Teacher t\r\n"
+					+ "		WHERE t.ID = 1\r\n"
+					+ "	)\r\n"
+					+ ")";
+			Query query = session.createQuery(hql);
+			results = (Set<Student>) query.getResultList();
+
+			tx.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return results;
 	}
 }

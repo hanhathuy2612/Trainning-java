@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.hibernate.Session;
 import org.huyha.utils.HibernateUtils;
 
+
 public abstract class HibernateDAO<T> implements Dao<T> {
 
 	private Class<T> domain;
